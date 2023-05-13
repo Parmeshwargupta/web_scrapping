@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kaun Banega Crorepati</title>
+</head>
+
+<body>
+    <h1>Welcome to Kaun Banega Crorepati!</h1>
+    <p>You will be asked a series of questions. Answer each question correctly to win money.</p>
+
+    <div id="question"></div>
+    <div id="choices"></div>
+    <input type="text" id="answer" placeholder="Enter your answer (A/B/C/D)">
+    <button onclick="submitAnswer()">Submit</button>
+    <p id="result"></p>
+    <p id="prize"></p>
+
+    <script>
+        // define the quiz questions and answers
+        var quiz = {
+            "What is the capital of India?": ["A. Delhi", "B. Mumbai", "C. Kolkata", "D. Chennai", "A"],
+            "What is the largest planet in our solar system?": ["A. Jupiter", "B. Saturn", "C. Uranus", "D. Neptune", "A"],
+            "What is the national animal of India?": ["A. Tiger", "B. Elephant", "C. Lion", "D. Leopard", "A"],
+            "Which country gifted the Statue of Liberty to the USA?": ["A. Spain", "B. France", "C. Italy", "D. Germany", "B"],
+            "What is the currency of Japan?": ["A. Yen", "B. Dollar", "C. Euro", "D. Pound", "A"]
+        };
+
+        // define the prize money for each correct answer
+        var prize_money = [0, 1000, 5000, 10000, 50000, 100000];
+
+        // shuffle the quiz questions
+        var questions = Object.keys(quiz).sort(function() {
+            return 0.5 - Math.random()
+        });
+
+        // initialize the game
+        var current_question = 0;
+        var total_prize = 0;
+        displayQuestion();
+
+        function displayQuestion() {
+            // display the question and answer choices
+            var question_div = document.getElementById("question");
+            question_div.innerHTML = "<h2>Question " + (current_question + 1) + ": " + questions[current_question] + "</h2>";
+            var choices_div = document.getElementById("choices");
+            choices_div.innerHTML = "";
+            for (var i = 0; i < 4; i++) {
+                choices_div.innerHTML += "<p>" + quiz[questions[current_question]][i] + "</p>";
+            }
+        }
+
+        function submitAnswer() {
+            // check the user's answer
+            var user_answer = document.getElementById("answer").value.toUpperCase();
+            var correct_answer = quiz[questions[current_question]][4];
+            if (user_answer == correct_answer) {
+                // update the prize money and display the result
+                current_question++;
+                total_prize += prize_money[current_question];
+                var result_div = document.getElementById("result");
+                result_div.innerHTML = "<p>Correct answer!</p>";
+                var prize_div = document.getElementById("prize");
+                prize_div.innerHTML = "<p>You have won Rs. " + prize_money[current_question] + "!</p>";
+                if (current_question < 5) {
+                    // display the next question
+                    displayQuestion();
+                } else {
+                    // end the game
+                    var end_div = document.createElement("div");
+
+                }
+            }
+        }
+        end_div.innerHTML = "<h2>Congratulations, you have won Rs.</h2>"
+    </script>
+</body>
